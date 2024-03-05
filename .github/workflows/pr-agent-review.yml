@@ -11,13 +11,12 @@ on:
     types: [created, edited]
   workflow_dispatch:
 
-permissions:
-  issues: write
-  pull-requests: write
-
 jobs:
   pr_agent_job:
     runs-on: ubuntu-latest
+    permissions:
+    issues: write
+    pull-requests: write
     name: Run pr agent on every pull request
     if: ${{ github.event.sender.type != 'Bot' }}
     steps:
@@ -27,7 +26,6 @@ jobs:
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CONFIG.MODEL: 'gpt-3.5-turbo'
           GITHUB_ACTION_CONFIG.AUTO_DESCRIBE: true
           GITHUB_ACTION_CONFIG.AUTO_REVIEW: true
           GITHUB_ACTION_CONFIG.AUTO_IMPROVE: true
