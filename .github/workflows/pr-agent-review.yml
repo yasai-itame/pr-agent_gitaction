@@ -30,5 +30,7 @@ jobs:
           GITHUB_ACTION_CONFIG.AUTO_DESCRIBE: true
           GITHUB_ACTION_CONFIG.AUTO_REVIEW: true
           GITHUB_ACTION_CONFIG.AUTO_IMPROVE: true
+          PR_REVIEWER.EXTRA_INSTRUCTIONS: 'Please use Japanese in descriptions.'
+          PR_DESCRIPTION.EXTRA_INSTRUCTIONS: 'Please use Japanese in descriptions. Titles should have prefix of commitlint pattern such as `feat:`, `chore:`, `test:`, `fix:`, `ci:`, `docs:` etc'
 
 
