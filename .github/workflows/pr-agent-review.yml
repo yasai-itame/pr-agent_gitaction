@@ -1,3 +1,7 @@
+# This workflow enables developers to call PR-Agents `/[actions]` in PR's comments and upon PR creation. 
+# Learn more at https://www.codium.ai/pr-agent/
+# This is v0.2 of this workflow file
+
 name: PR-Agent
 
 on:
@@ -5,6 +9,7 @@ on:
     types: [opened, reopened, synchronize]
   issue_comment:
     types: [created, edited]
+  workflow_dispatch:
 
 permissions:
   issues: write
@@ -16,15 +21,15 @@ jobs:
     name: Run pr agent on every pull request
     if: ${{ github.event.sender.type != 'Bot' }}
     steps:
-      - id: pragent
-        uses: Codium-ai/pr-agent@v0.11
+      - name: PR Agent action step
+        id: pragent
+        uses: Codium-ai/pr-agent@main
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-          OPENAI.API_BASE:      ${{ secrets.OPENAI_API_BASE }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          github_action_config.auto_review: 'true'
-          github_action_config.auto_describe: 'true'
-          github_action_config.auto_improve: 'true'
+          GITHUB_ACTION_CONFIG.AUTO_DESCRIBE: true
+          GITHUB_ACTION_CONFIG.AUTO_REVIEW: true
+          GITHUB_ACTION_CONFIG.AUTO_IMPROVE: true
           PR_REVIEWER.EXTRA_INSTRUCTIONS: 'Please use Japanese in descriptions.'
           PR_DESCRIPTION.EXTRA_INSTRUCTIONS: 'Please use Japanese in descriptions. Titles should have prefix of commitlint pattern such as `feat:`, `chore:`, `test:`, `fix:`, `ci:`, `docs:` etc'
 
